@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: restful-db
+
+server:
+  port: 8000

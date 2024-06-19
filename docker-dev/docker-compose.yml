@@ -1,0 +1,27 @@
+version: '3.8'  # Use the latest version of Docker Compose syntax
+
+services:
+  mongodb:
+    image: mongo:latest  # Use the latest MongoDB image from Docker Hub
+    container_name: mongodb  # Name your container
+    ports:
+      - "27017:27017"  # Map container port 27017 to host port 27017
+    volumes:
+      - mongodb_data:/data/db  # Mount a volume for MongoDB data persistence
+
+  mysql:
+    image: mysql:latest  # Use the latest MySQL image from Docker Hub
+    container_name: mysql  # Name your container
+    ports:
+      - "3306:3306"  # Map container port 3306 to host port 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword  # Set a root password for MySQL
+      MYSQL_DATABASE: mydatabase  # Create an initial database
+      MYSQL_USER: myuser  # Create a user
+      MYSQL_PASSWORD: mypassword  # Set a password for the user
+    volumes:
+      - mysql_data:/var/lib/mysql  # Mount a volume for MySQL data persistence
+
+volumes:
+  mongodb_data:  # Declare a volume for MongoDB data persistence
+  mysql_data:  # Declare a volume for MySQL data persistence
