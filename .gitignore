@@ -30,3 +30,6 @@ replay_pid*
 # target
 *target/
 
+# DS_Store
+*.DS_Store
+
