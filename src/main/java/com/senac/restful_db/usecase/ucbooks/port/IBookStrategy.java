@@ -6,5 +6,6 @@ public interface IBookStrategy {
 
     boolean selector(DatabaseType databaseType);
     CrudResponse getAllBooks();
+    CrudResponse getBook(CrudRequest request);
 
 }

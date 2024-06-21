@@ -16,9 +16,17 @@ public class LibraryController {
 
     private final IBookUC bookUC;
 
-    @GetMapping("/books/{database}")
+    @GetMapping("/books/db/{database}")
     public ResponseEntity<String> getBooks(@PathVariable("database") String db){
         var response = bookUC.getBooks(new BookUCRequest(db));
+        System.out.println(response);
+        return ResponseEntity.ok("only test");
+    }
+
+    @GetMapping("/book/id/{id}/db/{database}")
+    public ResponseEntity<String> getBook(@PathVariable("id") String id,
+                                          @PathVariable("database") String db){
+        var response = bookUC.getBook(new BookUCRequest(id, db));
         System.out.println(response);
         return ResponseEntity.ok("only test");
     }
