@@ -1,6 +1,7 @@
 package com.senac.restful_db.adapters.database.domain;
 
 
+import com.senac.restful_db.usecase.ucbooks.port.CrudRequest;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,12 +29,21 @@ public class BookMongo {
     private BigDecimal price;
 
     public BookDTO toBookDTO(BookMongo bookMongo){
-        return new BookDTOMongoDB()
+        return new BookDTO()
                 .setId(bookMongo.getId())
                 .setTitle(bookMongo.getTitle())
                 .setPublishedAt(bookMongo.getPublishedAt())
                 .setIsbn(bookMongo.getIsbn())
                 .setPrice(bookMongo.getPrice());
+    }
+
+    public BookMongo toEntity(CrudRequest crudRequest){
+        return BookMongo.builder()
+                .title(crudRequest.getTitle())
+                .publishedAt(crudRequest.getPublishedAt())
+                .isbn(crudRequest.getIsbn())
+                .price(crudRequest.getPrice())
+                .build();
     }
 
 }

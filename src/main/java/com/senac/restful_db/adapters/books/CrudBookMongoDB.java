@@ -1,5 +1,6 @@
 package com.senac.restful_db.adapters.books;
 
+import com.senac.restful_db.adapters.database.domain.BookDTO;
 import com.senac.restful_db.adapters.database.domain.BookMongo;
 import com.senac.restful_db.adapters.database.repositories.MongoDbBookRepository;
 import com.senac.restful_db.usecase.ucbooks.models.DatabaseType;
@@ -11,7 +12,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,13 +30,26 @@ public class CrudBookMongoDB implements IBookStrategy {
     @Override
     public CrudResponse getAllBooks() {
         var responseDb = mongoDbBookRepository.findAll();
-        return null;
+        var dtos = responseDb.stream().map(resp -> resp.toBookDTO(resp)).toList();
+        return CrudResponse.builder().books(dtos).build();
     }
 
     @Override
     public CrudResponse getBook(CrudRequest request) {
         var responseDb = mongoDbBookRepository.findById(request.getId());
-        return null;
+        if(responseDb.isPresent()){
+            var bookMongo = responseDb.get();
+            return CrudResponse.builder().books(List.of(responseDb.get().toBookDTO(bookMongo))).build();
+        }
+        return CrudResponse.builder().books(new ArrayList<>()).build();
+    }
+
+    @Override
+    public CrudResponse saveBook(CrudRequest request) {
+        var response = mongoDbBookRepository.save(new BookMongo().toEntity(request));
+        var book = new CrudResponse().toBookDto(response.getId(), response.getTitle(),
+                response.getPublishedAt(), response.getIsbn(), response.getPrice());
+        return CrudResponse.builder().books(List.of(book)).build();
     }
 
 }

@@ -1,29 +1,60 @@
 package com.senac.restful_db.usecase.ucbooks;
 
+import com.senac.restful_db.entities.BookEntity;
+import com.senac.restful_db.usecase.ucbooks.models.Book;
 import com.senac.restful_db.usecase.ucbooks.port.CrudRequest;
 import com.senac.restful_db.usecase.ucbooks.port.CrudResponse;
-import com.senac.restful_db.usecase.ucbooks.port.IBookStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class BookUCImpl implements IBookUC {
 
-    private final CrudBookStrategyFactory crudBookStrategy;
+    private final CrudBookStrategyFactory strategyFactory;
 
     @Override
-    public BookUCResponse getBooks(BookUCRequest request) {
-        var response = crudBookStrategy.getStrategy(request.getDatabaseType()).getAllBooks();
-        return new BookUCResponse();
+    public BookUCResponse retrieveAllBooks(BookUCRequest request) {
+        var response = strategyFactory.getStrategy(request.getDatabaseType()).getAllBooks();
+        this.validateResponse(response);
+        return BookUCResponse.builder().books(this.prepareReturn(response)).build();
     }
 
     @Override
     public BookUCResponse getBook(BookUCRequest request) {
-        CrudResponse response = crudBookStrategy.getStrategy(request.getDatabaseType())
+        var response = strategyFactory.getStrategy(request.getDatabaseType())
                 .getBook(CrudRequest.builder().id(request.getId()).build());
-        return null;
+        this.validateResponse(response);
+        return BookUCResponse.builder().books(this.prepareReturn(response)).build();
     }
 
+    @Override
+    public BookUCResponse saveBook(BookUCRequest requestUc) {
+        var response = strategyFactory.getStrategy(requestUc.getDatabaseType())
+                .saveBook(new CrudRequest().fromUcRequest(requestUc));
+        this.validateResponse(response);
+        return BookUCResponse.builder().books(this.prepareReturn(response)).build();
+    }
+
+    private void validateResponse(CrudResponse response){
+        if(response.getBooks().isEmpty()){
+            throw new RuntimeException("Book not found");
+        }
+    }
+
+    private List<Book> prepareReturn(CrudResponse response){
+        var entities = response.getBooks().stream()
+                .map(b -> new BookEntity()
+                        .toBookEntity(
+                                b.getId(),
+                                b.getTitle(),
+                                b.getPublishedAt(),
+                                b.getIsbn(),
+                                b.getPrice())
+                ).toList();
+        return new BookUCResponse().fromBookEntities(entities);
+    }
 
 }

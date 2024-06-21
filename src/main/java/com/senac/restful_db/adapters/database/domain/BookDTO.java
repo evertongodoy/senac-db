@@ -5,10 +5,20 @@ import java.time.LocalDate;
 
 public class BookDTO {
 
+    private String id;
     private String title;
     private LocalDate publishedAt;
     private String isbn;
     private BigDecimal price;
+
+    public String getId() {
+        return id;
+    }
+
+    public BookDTO setId(String id) {
+        this.id = id;
+        return this;
+    }
 
     public String getTitle() {
         return title;
