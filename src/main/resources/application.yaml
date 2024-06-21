@@ -8,12 +8,13 @@ spring:
   # MomngoDB
   data:
     mongodb:
-      host: localhost
-      port: 37017
-      database: library
-      username: root
-      password: root
-      write-concern: NORMAL
+      uri: mongodb://root:root@localhost:37017/library?authSource=admin&authMechanism=SCRAM-SHA-1
+#      host: localhost
+#      port: 37017
+#      database: library
+#      username: root
+#      password: root
+#      write-concern: NORMAL
 
   # MySQL Database access configuration properties via JDBC
   datasource:
