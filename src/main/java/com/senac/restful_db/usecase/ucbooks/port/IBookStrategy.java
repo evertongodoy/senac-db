@@ -9,5 +9,6 @@ public interface IBookStrategy {
     CrudResponse getBook(CrudRequest request);
     CrudResponse saveBook(CrudRequest request);
     CrudResponse editBook(CrudRequest request);
+    void deleteBook(CrudRequest request);
 
 }

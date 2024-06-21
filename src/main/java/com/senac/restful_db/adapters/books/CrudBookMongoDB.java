@@ -67,6 +67,17 @@ public class CrudBookMongoDB implements IBookStrategy {
         }
     }
 
+    @Override
+    public void deleteBook(CrudRequest request) {
+        var responseDb = mongoDbBookRepository.findById(request.getId());
+        if(responseDb.isPresent()){
+            var bookMongo = responseDb.get();
+            mongoDbBookRepository.delete(bookMongo);
+            return;
+        }
+        throw new RuntimeException("ID Book Mongo DB does not exists");
+    }
+
     private BookDTO prepareBookDTO(BookMongo entity){
         return new CrudResponse().toBookDto(String.valueOf(entity.getId()),
                 entity.getTitle(), entity.getPublishedAt(), entity.getIsbn(), entity.getPrice());

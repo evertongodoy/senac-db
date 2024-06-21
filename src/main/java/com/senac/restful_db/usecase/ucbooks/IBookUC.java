@@ -6,5 +6,6 @@ public interface IBookUC {
     BookUCResponse getBook(BookUCRequest request);
     BookUCResponse saveBook(BookUCRequest request);
     BookUCResponse editBook(BookUCRequest request);
+    void deleteBook(BookUCRequest request);
 
 }

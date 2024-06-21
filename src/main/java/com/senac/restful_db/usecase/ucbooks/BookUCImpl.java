@@ -46,6 +46,12 @@ public class BookUCImpl implements IBookUC {
         return BookUCResponse.builder().books(this.prepareReturn(response)).build();
     }
 
+    @Override
+    public void deleteBook(BookUCRequest request) {
+        strategyFactory.getStrategy(request.getDatabaseType())
+                .deleteBook(CrudRequest.builder().id(request.getId()).build());
+    }
+
     private void validateResponse(CrudResponse response){
         if(response.getBooks().isEmpty()){
             throw new RuntimeException("Book not found");
@@ -64,7 +70,5 @@ public class BookUCImpl implements IBookUC {
                 ).toList();
         return new BookUCResponse().fromBookEntities(entities);
     }
-
-
 
 }

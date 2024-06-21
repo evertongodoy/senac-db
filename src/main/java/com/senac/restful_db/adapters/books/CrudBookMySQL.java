@@ -59,9 +59,19 @@ public class CrudBookMySQL implements IBookStrategy {
             var response = mySqlBookRepository.save(new BookMySQL().toEntity(request));
             var bookDTO = this.prepareBookDTO(response);
             return CrudResponse.builder().books(List.of(bookDTO)).build();
-        } else {
-            throw new RuntimeException("ID Book MYSQL does not exists");
         }
+        throw new RuntimeException("ID Book MYSQL does not exists");
+    }
+
+    @Override
+    public void deleteBook(CrudRequest request) {
+        var responseDb = mySqlBookRepository.findById(Long.parseLong(request.getId()));
+        if(responseDb.isPresent()){
+            var bookMysql = responseDb.get();
+            mySqlBookRepository.delete(bookMysql);
+            return;
+        }
+        throw new RuntimeException("ID Book MYSQL does not exists");
     }
 
     private BookDTO prepareBookDTO(BookMySQL entity){
