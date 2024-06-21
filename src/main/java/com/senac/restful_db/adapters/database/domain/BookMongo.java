@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Data
 @Builder
@@ -39,6 +40,7 @@ public class BookMongo {
 
     public BookMongo toEntity(CrudRequest crudRequest){
         return BookMongo.builder()
+                .id(Objects.isNull(crudRequest.getId()) ? null : crudRequest.getId())
                 .title(crudRequest.getTitle())
                 .publishedAt(crudRequest.getPublishedAt())
                 .isbn(crudRequest.getIsbn())

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +39,13 @@ public class BookUCImpl implements IBookUC {
         return BookUCResponse.builder().books(this.prepareReturn(response)).build();
     }
 
+    @Override
+    public BookUCResponse editBook(BookUCRequest request) {
+        var crudRequest = new CrudRequest().fromUcRequest(request);
+        var response = strategyFactory.getStrategy(request.getDatabaseType()).editBook(crudRequest);
+        return BookUCResponse.builder().books(this.prepareReturn(response)).build();
+    }
+
     private void validateResponse(CrudResponse response){
         if(response.getBooks().isEmpty()){
             throw new RuntimeException("Book not found");
@@ -56,5 +64,7 @@ public class BookUCImpl implements IBookUC {
                 ).toList();
         return new BookUCResponse().fromBookEntities(entities);
     }
+
+
 
 }

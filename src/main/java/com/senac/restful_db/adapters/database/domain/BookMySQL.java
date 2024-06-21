@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Builder
 @Data
@@ -43,6 +44,7 @@ public class BookMySQL {
 
     public BookMySQL toEntity(CrudRequest crudRequest){
         return BookMySQL.builder()
+                .id(Objects.isNull(crudRequest.getId()) ? null : Long.parseLong(crudRequest.getId()))
                 .title(crudRequest.getTitle())
                 .publishedAt(crudRequest.getPublishedAt())
                 .isbn(crudRequest.getIsbn())

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -46,9 +47,33 @@ public class CrudBookMySQL implements IBookStrategy {
     @Override
     public CrudResponse saveBook(CrudRequest request) {
         var response = mySqlBookRepository.save(new BookMySQL().toEntity(request));
-        var book = new CrudResponse().toBookDto(String.valueOf(response.getId()),
-                response.getTitle(), response.getPublishedAt(), response.getIsbn(), response.getPrice());
-        return CrudResponse.builder().books(List.of(book)).build();
+        var bookDTO = this.prepareBookDTO(response);
+        return CrudResponse.builder().books(List.of(bookDTO)).build();
+    }
+
+    @Override
+    public CrudResponse editBook(CrudRequest request) {
+        var responseDb = mySqlBookRepository.findById(Long.parseLong(request.getId()));
+        if(responseDb.isPresent()){
+            this.buildBookMySQL(request, responseDb.get());
+            var response = mySqlBookRepository.save(new BookMySQL().toEntity(request));
+            var bookDTO = this.prepareBookDTO(response);
+            return CrudResponse.builder().books(List.of(bookDTO)).build();
+        } else {
+            throw new RuntimeException("ID Book MYSQL does not exists");
+        }
+    }
+
+    private BookDTO prepareBookDTO(BookMySQL entity){
+        return new CrudResponse().toBookDto(String.valueOf(entity.getId()),
+                entity.getTitle(), entity.getPublishedAt(), entity.getIsbn(), entity.getPrice());
+    }
+
+    private void buildBookMySQL(CrudRequest request, BookMySQL bookMySQL){
+        request.setTitle((Objects.isNull(request.getTitle()) || request.getTitle().trim().length() == 0) ? bookMySQL.getTitle() : request.getTitle());
+        request.setPublishedAt(Objects.isNull(request.getPublishedAt()) ? bookMySQL.getPublishedAt() : request.getPublishedAt());
+        request.setIsbn((Objects.isNull(request.getIsbn()) || request.getIsbn().trim().length() == 0) ? bookMySQL.getIsbn() : request.getIsbn());
+        request.setPrice(Objects.isNull(request.getPrice()) ? bookMySQL.getPrice() : request.getPrice());
     }
 
 }

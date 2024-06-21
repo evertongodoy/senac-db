@@ -38,10 +38,17 @@ public class LibraryController {
     }
 
     @PatchMapping("/book/id/{id}/db/{database}")
-    public ResponseEntity<BookUCResponse> updateBook(@PathVariable("database") String db,
-                                                     @RequestBody LibraryUpdateRequest request){
-
-        return ResponseEntity.ok(BookUCResponse.builder().build());
+    public ResponseEntity<BookUCResponse> updateBook(@PathVariable("id") String id,
+                                                     @PathVariable("database") String db,
+                                                     @RequestBody LibraryUpdateRequest updateRequest){
+        var request = new BookUCRequest(
+                id,
+                updateRequest.getTitle(),
+                updateRequest.getPublishedAt(),
+                updateRequest.getIsbn(),
+                updateRequest.getPrice(),
+                db);
+        return ResponseEntity.ok(bookUC.editBook(request));
     }
 
     @DeleteMapping("/book/id/{id}/db/{database}")

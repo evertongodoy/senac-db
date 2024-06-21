@@ -45,4 +45,14 @@ public class BookUCRequest {
         this.databaseType = DatabaseType.fromString(database);
     }
 
+    public BookUCRequest(String id, String title, LocalDate publishedAt, String isbn, BigDecimal price, String database){
+        this.id = id;
+        this.title = title;
+        this.publishedAt = publishedAt;
+        this.isbn = isbn;
+        this.price = price;
+        this.database = database;
+        this.databaseType = DatabaseType.fromString(database);
+    }
+
 }

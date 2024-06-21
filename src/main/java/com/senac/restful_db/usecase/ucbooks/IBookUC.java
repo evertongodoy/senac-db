@@ -4,7 +4,7 @@ public interface IBookUC {
 
     BookUCResponse retrieveAllBooks(BookUCRequest request);
     BookUCResponse getBook(BookUCRequest request);
-
     BookUCResponse saveBook(BookUCRequest request);
+    BookUCResponse editBook(BookUCRequest request);
 
 }

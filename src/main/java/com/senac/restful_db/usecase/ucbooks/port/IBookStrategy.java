@@ -8,5 +8,6 @@ public interface IBookStrategy {
     CrudResponse getAllBooks();
     CrudResponse getBook(CrudRequest request);
     CrudResponse saveBook(CrudRequest request);
+    CrudResponse editBook(CrudRequest request);
 
 }
