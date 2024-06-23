@@ -3,7 +3,6 @@ package com.senac.restful_db.adapters.rest;
 import com.senac.restful_db.usecase.ucbooks.BookUCRequest;
 import com.senac.restful_db.usecase.ucbooks.BookUCResponse;
 import com.senac.restful_db.usecase.ucbooks.IBookUC;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +53,7 @@ public class LibraryController {
 
     @DeleteMapping("/book/id/{id}/db/{database}")
     public ResponseEntity<?> deleteBook(@PathVariable("id") String id,
-                                                     @PathVariable("database") String db){
+                                        @PathVariable("database") String db){
         bookUC.deleteBook(new BookUCRequest(id, db));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 

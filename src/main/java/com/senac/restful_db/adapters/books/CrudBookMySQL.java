@@ -9,7 +9,6 @@ import com.senac.restful_db.usecase.ucbooks.port.CrudRequest;
 import com.senac.restful_db.usecase.ucbooks.port.CrudResponse;
 import com.senac.restful_db.usecase.ucbooks.port.IBookStrategy;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

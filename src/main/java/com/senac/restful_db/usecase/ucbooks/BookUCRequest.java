@@ -2,7 +2,6 @@ package com.senac.restful_db.usecase.ucbooks;
 
 import com.senac.restful_db.usecase.ucbooks.models.DatabaseType;
 import lombok.Getter;
-import org.springframework.cglib.core.Local;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
