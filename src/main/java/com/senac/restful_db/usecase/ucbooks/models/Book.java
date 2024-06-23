@@ -19,7 +19,6 @@ public class Book {
 
     private String id;
     private String title;
-    @JsonProperty("published_at")
     private LocalDate publishedAt;
     private String isbn;
     private BigDecimal price;

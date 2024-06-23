@@ -1,6 +1,7 @@
-package com.senac.restful_db.adapters.rest;
+package com.senac.restful_db.adapters.rest.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.senac.restful_db.usecase.ucbooks.BookUCResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,14 +11,15 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class LibraryUpdateRequest {
+@AllArgsConstructor
+@Builder
+public class BookResponse {
 
+    private String id;
     private String title;
-    @JsonProperty("publish_at")
-    private LocalDate publishedAt;
+    @JsonProperty("published_at")
+    private LocalDate published_at;
     private String isbn;
     private BigDecimal price;
 
