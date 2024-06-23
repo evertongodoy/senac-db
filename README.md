@@ -33,3 +33,31 @@ Projeto modelo para apresentação de aplicação RESTFUL conectando com banco d
 { id: "19", title: "Book Nineteen", isbn: "123-4567890141", published_at: new Date("2023-07-01"), price: 22.49 },
 { id: "20", title: "Book Twenty", isbn: "123-4567890142", published_at: new Date("2023-08-01"), price: 17.49 }
 ])
+
+
+
+
+### Links de consulta utilizados no desenvolvimento
+
+#### Configuracao de Flyway
+https://www.gasparbarancelli.com/post/flyway-e-spring-boot-como-gerenciar-a-evolucao-do-banco-de-dados-de-forma-automatizada-e-integrada
+
+#### Inserts em massa para MySQL
+https://www.mockaroo.com/
+
+#### Inserts em massa para MongoDB
+https://chatgpt.com/c/dfacbc72-4981-4141-aede-75018c1151bc
+
+#### Dependencia Flyway com Dialect 8 MySQL
+https://stackoverflow.com/questions/72711770/flyway-unsupported-database-mysql-8-0
+
+#### Configuracao MongoDB no applcation.yml
+https://medium.com/@bectorhimanshu/configuring-spring-boot-application-to-connect-with-mongodb-via-application-yml-7d131e0c436b
+
+#### Nome da tabela no campo @Table(name = Article.TABLE_NAME)
+https://www.baeldung.com/jpa-entity-table-names
+
+#### Resolvendo problema do collation com a Collection no MongoDB
+https://stackoverflow.com/questions/59532821/springboot-with-mongodb-error-while-using-find-query
+
+
